@@ -16,7 +16,9 @@ gcloud container clusters get-credentials demospring	 \
     --project YOUR_GCP_PROJECT_NAME
 
 
-## Grant cluster administrator (admin) permissions to the current user. To create the necessary RBAC rules for Istio, the current user requires admin permissions.
+## Grant cluster administrator (admin) permissions to the current user. 
+
+To create the necessary RBAC rules for Istio, the current user requires admin permissions.
 
 
 kubectl create clusterrolebinding cluster-admin-binding \
@@ -24,6 +26,12 @@ kubectl create clusterrolebinding cluster-admin-binding \
     --user=$(gcloud config get-value core/account)
 
 ## Install Istio
+
+curl -L https://istio.io/downloadIstio | sh -
+
+cd istio-1.4.1
+
+export PATH=$PWD/bin:$PATH
 
 for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f $i; done
 
